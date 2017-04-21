@@ -5,4 +5,3 @@ ng
     .module('test',['app'])
     .constant('API_END_POINT','http://api.test/');
 require('./services');
-require('./foo-viewer');
