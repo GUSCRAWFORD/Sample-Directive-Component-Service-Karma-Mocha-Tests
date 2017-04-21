@@ -3,6 +3,5 @@ var ng = require('angular');
 
 ng
     .module('app',['ngResource'])
-    .constant('API_END_POINT','http://api.example/');
 require('./services');
 require('./foo-viewer');

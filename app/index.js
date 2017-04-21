@@ -1,1 +1,1 @@
-require('app.module');
+require('./app.module');
