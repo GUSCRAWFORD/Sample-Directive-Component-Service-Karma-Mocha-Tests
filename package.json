@@ -1,0 +1,27 @@
+{
+  "name": "directive-controller-component-examples",
+  "version": "0.0.1",
+  "description": "An example of a fully tested modern component, contrasted with an element restricted directive with a controller, isolated scope and no link function",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start"
+  },
+  "keywords": [
+    "example"
+  ],
+  "author": "Gus Crawford",
+  "license": "MIT",
+  "devDependencies": {
+    "angular": "^1.6.4",
+    "angular-mocks": "^1.6.4",
+    "chai": "^3.5.0",
+    "karma": "^1.6.0",
+    "karma-chai": "^0.1.0",
+    "karma-istanbul": "0.0.2",
+    "karma-mocha": "^1.3.0",
+    "karma-sinon": "^1.0.5",
+    "karma-webpack": "^2.0.3",
+    "sinon": "^2.1.0",
+    "webpack": "^2.4.1"
+  }
+}
