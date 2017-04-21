@@ -1,6 +1,6 @@
 // Karma configuration
 // Generated on Thu Apr 20 2017 21:42:51 GMT-0400 (Eastern Daylight Time)
-
+var path = require('path');
 module.exports = function(config) {
   config.set({
 
@@ -10,7 +10,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha'],
+    frameworks: ['mocha','chai','sinon'],
 
 
     // list of files / patterns to load in the browser
@@ -27,14 +27,39 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      './test/test.module.js':['webpack']
     },
-
+    // [!] pack source and tests with webpack first
+    webpack:{
+    	devtool: '#inline-source-map',
+    	module: {
+    		rules: [
+          {
+            test: /\.partial\.html$/i,
+            use: [{ loader: 'html-loader', query: { minimized: true } }]
+          },
+          // instrument only testing sources with Istanbul
+          // "Your index.js files are part of our code and should be tested"
+          // - hueniverse (https://github.com/hapijs/lab/issues/120)
+          {
+              test: /\.js$/,
+              include: path.resolve('app'),
+              loader: 'istanbul-instrumenter-loader'
+          }        
+        ]
+    	}
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
-
+    reporters: ['progress', /*[!]*/'coverage-istanbul'],
+    // [!] outputs coverage
+    coverageIstanbulReporter: {
+        reports: [ 'html', 'text-summary' ],
+        fixWebpackSourcePaths: true,
+        dir: './test/coverage'
+    },
 
     // web server port
     port: 9876,
