@@ -8,12 +8,19 @@ function fooViewerDirectiveController (foo) {
     vm.getAllFoosForDirective = getAllFoosForDirective;
     init();
 
+    // [!] The functions between the component and directive have not changed
     function getAllFoosForDirective () {
-        return foo.query().$promise;
+        vm.busy = true;
+        return foo.query().$promise.then(function(foos){
+            vm.busy = false;
+            return foos;
+        });
     }
 
     function init () {
-        foo.getAllFoosForDirective();
+        vm.getAllFoosForDirective().then(function (foos) {
+            return vm.foos = foos;
+        });
     }
 }
 
@@ -24,7 +31,11 @@ ng
         return {
             template:require('./foo-viewer.partial.html'),
             restrict:'E',
-            controller: fooViewerDirectiveController.registeredName,
-            controllerAs:'vm'
+            controller: 'fooViewerDirectiveController',
+            controllerAs:'vm',
+            bindToController:true,
+            scope: {
+                bar:'='
+            }
         }
     });

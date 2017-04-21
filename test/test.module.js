@@ -6,3 +6,4 @@ ng
 ng
     .module('test',['app']);
 require('./services');
+require('./foo-viewer');

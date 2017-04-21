@@ -22,6 +22,10 @@ describe('foo service', function () {
         API_END_POINT = _API_END_POINT_;
     }))
     describe('query', function () {
+        // Rather than have the tests for every other downstream consumer
+        // test specifics of backend calls, let the services making the calls
+        // be verified.  In this case this is still superfluous as I'm essentially
+        // testing a 3rd party lib (angular-resource)
         describe('()', function() {
             it('calls GET: ~/foo', function () {
                 $httpBackend

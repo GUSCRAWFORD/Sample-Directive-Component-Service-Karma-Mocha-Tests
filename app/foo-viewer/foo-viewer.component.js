@@ -5,15 +5,22 @@ fooViewerComponentController.componentName = 'fooViewerComponent';
 fooViewerComponentController.$inject = ['foo'];
 function fooViewerComponentController (foo) {
     var vm = this;
-    ctrl.getAllFoosForComponent = getAllFoosForComponent;
-    ctrl.$onInit = init;
+    vm.getAllFoosForComponent = getAllFoosForComponent;
+    vm.$onInit = init;
+    vm.busy = false;
 
     function getAllFoosForComponent () {
-        return foo.query().$promise;
+        vm.busy = true;
+        return foo.query().$promise.then(function(foos){
+            vm.busy = false;
+            return foos;
+        });
     }
 
     function init () {
-        foo.getAllFoosForComponent();
+        vm.getAllFoosForComponent().then(function (foos) {
+            return vm.foos = foos;
+        });
     }
 }
 
@@ -22,5 +29,8 @@ ng
     .component(fooViewerComponentController.componentName, {
             template:require('./foo-viewer.partial.html'), 
             controller: fooViewerComponentController,
-            controllerAs:'vm'
+            controllerAs:'vm',
+            bindings:{
+                bar:'='
+            }
         });
